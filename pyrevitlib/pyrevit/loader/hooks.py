@@ -2,7 +2,7 @@
 import os.path as op
 from collections import namedtuple
 
-from pyrevit import HOST_APP
+from pyrevit import HOST_APP, EXEC_PARAMS
 from pyrevit import coreutils
 from pyrevit.coreutils.loadertypes import EventType, PyRevitHooks
 from pyrevit.coreutils import envvars
@@ -13,59 +13,60 @@ PYREVIT_HOOKS_ENVVAR = \
     envvars.PYREVIT_ENVVAR_PREFIX + '_HOOKS'
 
 
-HOOK_TYPES = {
-    'app-closing': EventType.UIApplication_ApplicationClosing,
-    'app-idling': EventType.UIApplication_Idling,
-    'app-init': EventType.Application_ApplicationInitialized,
-    'dialog-showing': EventType.UIApplication_DialogBoxShowing,
-    'doc-changed': EventType.Application_DocumentChanged,
-    'doc-closed': EventType.Application_DocumentClosed,
-    'doc-closing': EventType.Application_DocumentClosing,
-    'doc-created': EventType.Application_DocumentCreated,
-    'doc-creating': EventType.Application_DocumentCreating,
-    'doc-opened': EventType.Application_DocumentOpened,
-    'doc-opening': EventType.Application_DocumentOpening,
-    'doc-printed': EventType.Application_DocumentPrinted,
-    'doc-printing': EventType.Application_DocumentPrinting,
-    'doc-saved-as': EventType.Application_DocumentSavedAs,
-    'doc-saved': EventType.Application_DocumentSaved,
-    'doc-saving-as': EventType.Application_DocumentSavingAs,
-    'doc-saving': EventType.Application_DocumentSaving,
-    'doc-synced': EventType.Application_DocumentSynchronizedWithCentral,
-    'doc-syncing': EventType.Application_DocumentSynchronizingWithCentral,
-    'doc-worksharing-enabled': EventType.Application_DocumentWorksharingEnabled,
-    'dock-focus-changed': EventType.UIApplication_DockableFrameFocusChanged,
-    'dock-visibility-changed':
-        EventType.UIApplication_DockableFrameVisibilityChanged,
-    'fabparts-browser-changed':
-        EventType.UIApplication_FabricationPartBrowserChanged,
-    'failure-processing': EventType.Application_FailuresProcessing,
-    'family-loaded': EventType.Application_FamilyLoadedIntoDocument,
-    'family-loading': EventType.Application_FamilyLoadingIntoDocument,
-    'file-exported': EventType.Application_FileExported,
-    'file-exporting': EventType.Application_FileExporting,
-    'file-imported': EventType.Application_FileImported,
-    'file-importing': EventType.Application_FileImporting,
-    'formula-editing': EventType.UIApplication_FormulaEditing,
-    'link-opened': EventType.Application_LinkedResourceOpened,
-    'link-opening': EventType.Application_LinkedResourceOpening,
-    'options-showing': EventType.UIApplication_DisplayingOptionsDialog,
-    'progress-changed': EventType.Application_ProgressChanged,
-    'transferred_project_standards':
-        EventType.UIApplication_TransferredProjectStandards,
-    'transferring_project_standards':
-        EventType.UIApplication_TransferringProjectStandards,
-    'type-duplicated': EventType.Application_ElementTypeDuplicated,
-    'type-duplicating': EventType.Application_ElementTypeDuplicating,
-    'view-activated': EventType.UIApplication_ViewActivated,
-    'view-activating': EventType.UIApplication_ViewActivating,
-    'view-exported': EventType.Application_ViewExported,
-    'view-exporting': EventType.Application_ViewExporting,
-    'view-printed': EventType.Application_ViewPrinted,
-    'view-printing': EventType.Application_ViewPrinting,
-    'worksharing-ops-progress-changed':
-        EventType.Application_WorksharedOperationProgressChanged,
-}
+if not EXEC_PARAMS.doc_mode:
+    HOOK_TYPES = {
+        'app-closing': EventType.UIApplication_ApplicationClosing,
+        'app-idling': EventType.UIApplication_Idling,
+        'app-init': EventType.Application_ApplicationInitialized,
+        'dialog-showing': EventType.UIApplication_DialogBoxShowing,
+        'doc-changed': EventType.Application_DocumentChanged,
+        'doc-closed': EventType.Application_DocumentClosed,
+        'doc-closing': EventType.Application_DocumentClosing,
+        'doc-created': EventType.Application_DocumentCreated,
+        'doc-creating': EventType.Application_DocumentCreating,
+        'doc-opened': EventType.Application_DocumentOpened,
+        'doc-opening': EventType.Application_DocumentOpening,
+        'doc-printed': EventType.Application_DocumentPrinted,
+        'doc-printing': EventType.Application_DocumentPrinting,
+        'doc-saved-as': EventType.Application_DocumentSavedAs,
+        'doc-saved': EventType.Application_DocumentSaved,
+        'doc-saving-as': EventType.Application_DocumentSavingAs,
+        'doc-saving': EventType.Application_DocumentSaving,
+        'doc-synced': EventType.Application_DocumentSynchronizedWithCentral,
+        'doc-syncing': EventType.Application_DocumentSynchronizingWithCentral,
+        'doc-worksharing-enabled': EventType.Application_DocumentWorksharingEnabled,
+        'dock-focus-changed': EventType.UIApplication_DockableFrameFocusChanged,
+        'dock-visibility-changed':
+            EventType.UIApplication_DockableFrameVisibilityChanged,
+        'fabparts-browser-changed':
+            EventType.UIApplication_FabricationPartBrowserChanged,
+        'failure-processing': EventType.Application_FailuresProcessing,
+        'family-loaded': EventType.Application_FamilyLoadedIntoDocument,
+        'family-loading': EventType.Application_FamilyLoadingIntoDocument,
+        'file-exported': EventType.Application_FileExported,
+        'file-exporting': EventType.Application_FileExporting,
+        'file-imported': EventType.Application_FileImported,
+        'file-importing': EventType.Application_FileImporting,
+        'formula-editing': EventType.UIApplication_FormulaEditing,
+        'link-opened': EventType.Application_LinkedResourceOpened,
+        'link-opening': EventType.Application_LinkedResourceOpening,
+        'options-showing': EventType.UIApplication_DisplayingOptionsDialog,
+        'progress-changed': EventType.Application_ProgressChanged,
+        'transferred_project_standards':
+            EventType.UIApplication_TransferredProjectStandards,
+        'transferring_project_standards':
+            EventType.UIApplication_TransferringProjectStandards,
+        'type-duplicated': EventType.Application_ElementTypeDuplicated,
+        'type-duplicating': EventType.Application_ElementTypeDuplicating,
+        'view-activated': EventType.UIApplication_ViewActivated,
+        'view-activating': EventType.UIApplication_ViewActivating,
+        'view-exported': EventType.Application_ViewExported,
+        'view-exporting': EventType.Application_ViewExporting,
+        'view-printed': EventType.Application_ViewPrinted,
+        'view-printing': EventType.Application_ViewPrinting,
+        'worksharing-ops-progress-changed':
+            EventType.Application_WorksharedOperationProgressChanged,
+    }
 
 
 EventHook = namedtuple('EventHook', [

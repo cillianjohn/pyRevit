@@ -62,6 +62,8 @@ else:
         EnvDictionaryKeys = EnvDictionary = PyRevitCommand = \
         PyRevitCommandExtendedAvail = PyRevitCommandSelectionAvail = \
         PyRevitCommandDefaultAvail = PyRevitScriptRuntime = \
-        ScriptExecutor = ScriptOutput = ScriptOutputManager = \
-        ScriptOutputStream = ScriptTelemetry = \
+        ScriptExecutor = UIDocUtils = EventHook = PyRevitHooks = \
+        PyRevitTemplateWindow = ScriptOutput = ScriptOutputEmojis = \
+        ScriptOutputManager = ScriptOutputStream = ScriptTelemetry = \
+        EventType = ScriptTelemetry = EventTelemetry = \
         RECT = User32 = GDI32 = None

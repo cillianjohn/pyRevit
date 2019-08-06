@@ -113,6 +113,7 @@ class MockImporter(object):
                       'MadMilkman',
                       'OpenMcdf',
                       'MahApps',
+                      'YamlDotNet',
                       'pyRevitLabs',
                       '_winreg',
                       ]
