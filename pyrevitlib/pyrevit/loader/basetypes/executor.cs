@@ -146,17 +146,19 @@ namespace PyRevitBaseClasses {
                     PythonEngine.Initialize();
 
                 // set output stream
-                // TODO: implement __builtins__ like ironpython
                 dynamic sys = PythonEngine.ImportModule("sys");
                 sys.stdout = pyrvtScript.OutputStream;
 
+                // TODO: implement globals like ironpython
                 // set uiapplication
                 sys.host = pyrvtScript.UIApp;
+                var locals = new PyDict();
+                locals["__file__"] = pyrvtScript.ScriptSourceFile.ToPython();
 
                 // run
                 try {
                     var scriptContents = File.ReadAllText(pyrvtScript.ScriptSourceFile);
-                    PythonEngine.Exec(scriptContents);
+                    PythonEngine.Exec(scriptContents, locals: locals.Handle);
                     return ExecutionResultCodes.Succeeded;
                 }
                 catch (Exception cpyex) {
